@@ -14,6 +14,43 @@
 
           Upon submitting the form, simply print the value to the console
       -->
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="projectName">Project Name</label>
+          <input
+            type="text"
+            id="projectName"
+            formControlName="projectName"
+            class="form-control">
+          <span
+            *ngIf="!projectForm.get('projectName').valid && projectForm.get('projectName').touched"
+            class="help-block">
+            <span *ngIf="projectForm.get('projectName').errors && projectForm.get('projectName').errors['required']">Project Name is required</span>
+            <span *ngIf="projectForm.get('projectName').errors && projectForm.get('projectName').errors['noTest']">Project Name cannot be Test</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="email">Mail</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control">
+          <span
+            *ngIf="!projectForm.get('email').valid && projectForm.get('email').touched"
+            class="help-block">
+            <span *ngIf="projectForm.get('email').errors['required']">Mail is required</span>
+            <span *ngIf="projectForm.get('email').errors['email']">Mail must be valid email address</span>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="projectStatus">Project Status</label>
+          <select formControlName="projectStatus" id="projectStatus" class="form-control">
+            <option [value]="status" *ngFor="let status of projectStatuses">{{ status }}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!projectForm.valid">Submit</button>
+      </form>
     </div>
   </div>
 </div>
